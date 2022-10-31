@@ -47,6 +47,7 @@ export class MessageWSService {
     };
 
     this.ws.onmessage = function (msg: any) {
+      console.log('msg', msg);
       const mes = JSON.parse(msg.data);
       if (mes["status"] == 1) {
         self.onMessage.emit(mes["data"] as Message);
