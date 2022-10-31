@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginApiResponse } from '../api-response';
 import { HttpService } from '../http.service';
+import { MessageWSService } from '../message-ws.service';
 import { User } from '../user';
 
 
@@ -25,9 +26,11 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
+    private messageWsService: MessageWSService
   ) {
     if (httpService.isLogin) {
       this.router.navigate(['/']);
+      messageWsService.open();
     }
   }
 
@@ -67,6 +70,7 @@ export class LoginComponent implements OnInit {
               this.httpService.isLogin = true;
               this.httpService.user = new User(responseData.user_id, responseData.user_name, "");
               this.router.navigate(['/']);
+              this.messageWsService.open();
             } else {
               this.loading = false;
               // add errors to the list if user could not be logged in

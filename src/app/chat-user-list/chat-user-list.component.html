@@ -1,4 +1,6 @@
 <!-- Displaying the list of users-->
-<div *ngFor="let user of users" (click)="userClicked.emit(user)">
-    {{user.user_id}} {{user.user_name}} {{user.online}}
+<h2>Users</h2>
+<div class="user-item" *ngFor="let user of users" (click)="userClicked.emit(user)">
+    ID: {{user.user_id}}, Username: {{user.user_name}}, Online: {{user.online}}
 </div>
+<br>

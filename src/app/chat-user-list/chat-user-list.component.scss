@@ -1,0 +1,14 @@
+.user-item {
+    width: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.2s;
+    background: white;
+    color: black;
+}
+
+.user-item:hover {
+    background: #555555;
+    color: white;
+    cursor: pointer;
+}

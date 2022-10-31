@@ -4,6 +4,7 @@ import { HttpService } from '../http.service';
 import { User } from '../user';
 import { DataApiResponse } from '../api-response';
 import { Message } from '../message';
+import { MessageWSService } from '../message-ws.service';
 
 @Component({
   selector: 'app-chat',
@@ -12,16 +13,16 @@ import { Message } from '../message';
 })
 export class ChatComponent {
 
-
   users: User[] = [];
-
   messagesToUser: Message[] = [];
-
   selectedUser: User = {} as User;
+  userSubscription: any;
+  messageSubscription: any;
 
   constructor(
     private router: Router,
     private httpService: HttpService,
+    private messageWsService: MessageWSService
   ) {
     if (!httpService.isLogin) {
       this.router.navigate(['/login']);
@@ -29,9 +30,21 @@ export class ChatComponent {
   }
 
   ngOnInit() {
-    this.reloadUsers();
+    this.onAnotherUserConnected();
+    this.onMessage();
   }
 
+  onAnotherUserConnected() {
+    this.userSubscription = this.messageWsService.onAnotherUserConneted.subscribe(bool => {
+      this.reloadUsers();
+    })
+  }
+
+  onMessage() {
+    this.messageSubscription = this.messageWsService.onMessage.subscribe(msg => {
+      this.getMessagesWithSelectedUser();
+    })
+  }
 
   getMyId() {
     return this.httpService.loginUserData.user_id;

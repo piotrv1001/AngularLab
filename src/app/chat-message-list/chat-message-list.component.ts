@@ -15,6 +15,7 @@ export class ChatMessageListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('messages', this.messages);
   }
 
 }

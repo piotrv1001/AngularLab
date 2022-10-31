@@ -9,25 +9,22 @@
     <!-- ng-container - this is a tag that enables the use of if and the angular forum
          without adding additional tags understood by the browser-->
 
-    <ng-container *ngIf="selectedUser">
+    <ng-container *ngIf="selectedUser.user_id !== undefined">
         <!-- TODO: Add a message binding to the user -->
         <app-chat-message-list [myId]="getMyId()" [messages]="messagesToUser"></app-chat-message-list>
 
         <app-chat-new-message-area (sendButtonClicked)="sendMessage($event)"></app-chat-new-message-area>
     </ng-container>
 
-    <ng-container *ngIf="!selectedUser">
+    <ng-container *ngIf="selectedUser.user_id === undefined">
       Please select user
     </ng-container>
 
 
-    <ng-container *ngIf="selectedUser">
-      <!-- TODO: displaying the name of the selected user -->
-      {{selectedUser.user_name}}
-
-      <br />
+    <ng-container *ngIf="selectedUser.user_id !== undefined">
       <!-- TODO: display the ID of the selected user -->
-      {{selectedUser.user_id}}
-
+      ID: {{selectedUser.user_id}}
+      <!-- TODO: displaying the name of the selected user -->
+      Username: {{selectedUser.user_name}}
     </ng-container>
 
